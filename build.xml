@@ -1,0 +1,91 @@
+<project name="Unicorn" default="build.release">
+
+    <path id="classpath">
+        <fileset dir="libs">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <property file="ant.properties"/>
+
+    <property name="jar.name" value="${ant.project.name}.jar"/>
+    <property name="zip.name" value="${ant.project.name}-${release.version}.zip"/>
+
+    <tstamp>
+        <format property="release.date" pattern="dd.MM.yyyy  HH:mm"/>
+    </tstamp>
+
+
+    <!--________________________________________Packaging____________________________________________________________-->
+    <target name="build.dirs" description="Prepare build infrastructure">
+        <mkdir dir="build"/>
+        <mkdir dir="build/classes"/>
+        <mkdir dir="build/${ant.project.name}"/>
+        <mkdir dir="releases"/>
+        <echo>All dirs created!</echo>
+    </target>
+
+    <target name="build.classes" depends="build.dirs" description="Compile classes">
+        <echo>Building classes...</echo>
+        <javac destdir="build/classes" classpathref="classpath">
+            <src path="src"/>
+        </javac>
+        <echo>All classes were built!</echo>
+    </target>
+
+    <target name="build.jar" depends="build.classes" description="Make executable jar file">
+        <jar destfile="build/${jar.name}">
+            <fileset dir="build/classes">
+                <include name="**/*.class"/>
+            </fileset>
+            <manifest>
+                <attribute name="Main-Class" value="com.polarnick.unicorn.Main"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="build.release" depends="build.jar" description="Builds and places new release version">
+        <copy todir="build/${ant.project.name}/libs">
+            <fileset dir="libs" includes="**"/>
+        </copy>
+        <copy todir="build/${ant.project.name}/bin">
+            <fileset dir="bin" includes="**"/>
+        </copy>
+        <copy file="build/${jar.name}" tofile="build/${ant.project.name}/bin/${jar.name}"/>
+
+        <copy file="readme.txt" tofile="build/${ant.project.name}/readme.txt" overwrite="true"/>
+        <echo file="build/${ant.project.name}/readme.txt" append="true"
+              message="${line.separator}Build date:       ${release.date}"/>
+        <echo file="build/${ant.project.name}/readme.txt" append="true"
+              message="${line.separator}Release version:  ${release.version}"/>
+
+        <zip destfile="releases/${zip.name}">
+            <fileset dir="build" includes="${ant.project.name}/**"/>
+        </zip>
+    </target>
+
+
+    <!--_______________________________________________Cleaning______________________________________________________-->
+    <target name="clean.build" description="Clean intermediate products (like classes)">
+        <delete includeemptydirs="true">
+            <fileset dir="build">
+                <include name="**/*"/>
+            </fileset>
+        </delete>
+        <echo>Build products deleted!</echo>
+    </target>
+
+    <target name="clean.releases" description="Delete all releases">
+        <delete>
+            <fileset dir="releases">
+                <include name="*"/>
+            </fileset>
+        </delete>
+        <echo>Releases deleted!</echo>
+    </target>
+
+    <target name="clean.all" description="Cleans all" depends="clean.build, clean.releases">
+        <echo>Everything cleaned!</echo>
+    </target>
+
+</project>
