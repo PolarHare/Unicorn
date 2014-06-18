@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <context:property-placeholder location="classpath:config.properties"/>
+
+    <bean id="echonestApiProvider" class="com.polarnick.unicorn.echonest.EchonestAPIProvider">
+        <constructor-arg value="${echonest.apikey}"/>
+    </bean>
+
+    <bean id="enmfpRecognizer" class="com.polarnick.unicorn.echonest.recognizers.fingerprinters.ENMFPFingerPrinter">
+        <constructor-arg value="${enmfp.exe}"/>
+    </bean>
+
+</beans>

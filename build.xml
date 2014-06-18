@@ -4,6 +4,9 @@
         <fileset dir="libs">
             <include name="jEN.jar"/>
             <include name="json_simple-1.1.jar"/>
+            <include name="jsr305-1.3.9.jar"/>
+            <include name="spring-beans-4.0.5.RELEASE.jar"/>
+            <include name="log4j-1.2.17.jar"/>
         </fileset>
     </path>
 

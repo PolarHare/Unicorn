@@ -1,7 +1,6 @@
 package com.polarnick.unicorn;
 
-/**                 iegh4wiG
- *
+/**
  * @author Nickolay Polyarnyi
  */
 public class Main {
