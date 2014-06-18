@@ -2,7 +2,8 @@
 
     <path id="classpath">
         <fileset dir="libs">
-            <include name="*.jar"/>
+            <include name="jEN.jar"/>
+            <include name="json_simple-1.1.jar"/>
         </fileset>
     </path>
 
