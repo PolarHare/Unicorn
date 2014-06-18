@@ -1,4 +1,4 @@
-package com.polarnick.unicorn.echonest.utils;
+package com.polarnick.unicorn.utils;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;

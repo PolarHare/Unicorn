@@ -32,7 +32,7 @@ public class FingerPrintRecognizer implements SongRecognizer {
     @Nullable
     @Override
     public Song getSong(File file) throws InterruptedException {
-        LOG.debug("Recognizing by finger print...\nFile: " + file);
+        LOG.debug("Recognizing by finger print...\r\nFile: " + file);
 
         final String code;
         try {
@@ -49,7 +49,7 @@ public class FingerPrintRecognizer implements SongRecognizer {
         List<Song> songs;
         try {
             LOG.debug("Finger print was sent for recognizing...");
-            songs = apiProvider.getEchoNestAPI().identifySongs(params);
+            songs = apiProvider.get().identifySongs(params);
         } catch (EchoNestException e) {
             LOG.error("Identifying failed!", e);
             return null;

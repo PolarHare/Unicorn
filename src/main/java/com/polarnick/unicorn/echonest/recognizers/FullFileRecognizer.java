@@ -32,7 +32,7 @@ public class FullFileRecognizer implements SongRecognizer {
     @Nullable
     @Override
     public Song getSong(File file) throws InterruptedException {
-        LOG.debug("Recognizing by full file...\nFile: " + file);
+        LOG.debug("Recognizing by full file...\r\nFile: " + file);
 
         final List<Song> songs;
         try {
@@ -40,7 +40,7 @@ public class FullFileRecognizer implements SongRecognizer {
             for (int i = 1; i <= maxAttempts && track == null; i++) {
                 LOG.debug("Uploading file... (attempt #" + i + ")");
                 try {
-                    track = apiProvider.getEchoNestAPI().uploadTrack(file);
+                    track = apiProvider.get().uploadTrack(file);
                 } catch (IOException e) {
                     LOG.warn("Exception while uploading!", e);
                 }
@@ -57,7 +57,7 @@ public class FullFileRecognizer implements SongRecognizer {
             params.setID(track.getSongID());
 
             LOG.debug("Getting song by songID=" + track.getSongID() + "...");
-            songs = apiProvider.getEchoNestAPI().getSongs(params);
+            songs = apiProvider.get().getSongs(params);
         } catch (EchoNestException e) {
             LOG.error("Identifying failed!", e);
             return null;

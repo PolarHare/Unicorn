@@ -1,6 +1,6 @@
 package com.polarnick.unicorn.echonest.recognizers.fingerprinters;
 
-import com.polarnick.unicorn.echonest.utils.Utils;
+import com.polarnick.unicorn.utils.Utils;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -40,7 +40,7 @@ public class ENMFPFingerPrinter implements FingerPrinter {
 
         String output = Utils.readString(p.getInputStream());
         if (code != 1) {
-            LOG.error("Code " + code + " returned, not 1. For file=" + file + "\nOutput:\n___\n" + output + "\n___\n");
+            LOG.error("Code " + code + " returned, not 1. For file=" + file + "\r\nOutput:\r\n___\r\n" + output + "\r\n___\r\n");
             return null;
         }
 
@@ -50,11 +50,11 @@ public class ENMFPFingerPrinter implements FingerPrinter {
             JSONObject result = (JSONObject) parser.parse(output);
             fingerPrint = (String) result.get("code");
             if (Utils.isEmpty(fingerPrint)) {
-                LOG.error("No code were returned:\n___\n" + output + "\n___\n");
+                LOG.error("No code were returned:\r\n___\r\n" + output + "\r\n___\r\n");
                 return null;
             }
         } catch (ParseException e) {
-            LOG.error("Parsing of json output failed:\n___\n" + output + "\n___\n", e);
+            LOG.error("Parsing of json output failed:\r\n___\r\n" + output + "\r\n___\r\n", e);
             throw new IllegalStateException(e);
         }
         return fingerPrint;

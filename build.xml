@@ -5,8 +5,12 @@
             <include name="jEN.jar"/>
             <include name="json_simple-1.1.jar"/>
             <include name="jsr305-1.3.9.jar"/>
-            <include name="spring-beans-4.0.5.RELEASE.jar"/>
             <include name="log4j-1.2.17.jar"/>
+            <include name="commons-logging-1.1.3.jar"/>
+            <include name="spring-beans-4.0.5.RELEASE.jar"/>
+            <include name="spring-context-4.0.5.RELEASE.jar"/>
+            <include name="spring-core-4.0.5.RELEASE.jar"/>
+            <include name="spring-expression-4.0.5.RELEASE.jar"/>
         </fileset>
     </path>
 
@@ -31,19 +35,20 @@
 
     <target name="build.classes" depends="build.dirs" description="Compile classes">
         <echo>Building classes...</echo>
-        <javac destdir="build/classes" classpathref="classpath">
-            <src path="src"/>
+        <javac destdir="build/classes" classpathref="classpath" debug="true">
+            <src path="src/main/java"/>
         </javac>
         <echo>All classes were built!</echo>
     </target>
 
     <target name="build.jar" depends="build.classes" description="Make executable jar file">
         <jar destfile="build/${jar.name}">
-            <fileset dir="build/classes">
-                <include name="**/*.class"/>
-            </fileset>
+            <fileset dir="build/classes"/>
+            <fileset dir="src/main/resources"/>
             <manifest>
-                <attribute name="Main-Class" value="com.polarnick.unicorn.Main"/>
+                <attribute name="Built-By" value="${builder}"/>
+                <attribute name="Built-At" value="${release.date}"/>
+                <attribute name="Release-Version" value="${release.version}"/>
             </manifest>
         </jar>
     </target>
